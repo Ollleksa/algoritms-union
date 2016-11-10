@@ -12,6 +12,7 @@ class UF
         int coun;
         vector<int> Peop;
         vector<int> Weig;
+        vector<int> Max;
     public:
         UF(int Nm)
         {
@@ -21,6 +22,7 @@ class UF
             {
                 Peop.push_back(i);
                 Weig.push_back(1);
+                Max.push_back(i);
             }
         }
 
@@ -39,6 +41,11 @@ class UF
             for(int i = 0; i< N; i++)
             {
                 cout << Weig[i] << "\t";
+            }
+            cout << endl;
+            for(int i = 0; i< N; i++)
+            {
+                cout << Max[i] << "\t";
             }
             cout << endl;
         }
@@ -64,6 +71,15 @@ class UF
                     cout << "They become friends at " << coun+1 << " timestamp." << endl;
                     exit(EXIT_SUCCESS);
                 }
+
+                if(Max[ri] > Max[rj])
+                {
+                    Max[rj] = Max[ri];
+                }
+                else
+                {
+                    Max[ri] = Max[rj];
+                }
             }
             coun++;
         }
@@ -73,6 +89,11 @@ class UF
             while(i != Peop[i])
                 {i = Peop[i];}
             return i;
+        }
+
+        int findMax(int i)
+        {
+            return Max[root(i)];
         }
 };
 
@@ -90,6 +111,9 @@ int main()
     {
             first.unite(a,b);
             first.show();
+            int M;
+            M = first.findMax(0);
+            cout << "Maximal number in zero connected components group: " << M << endl;
     }
 
     cout << "They are not friends in " << first.cnt() << " steps" << endl;
